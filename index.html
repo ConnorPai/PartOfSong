@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>图片切换示例</title>
+<style>
+  @font-face {
+    font-family: 'FloralD';
+    src: url('FloralD.ttf'); /* 确保字体文件路径正确 */
+  }
+
+  body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url('background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .carousel {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .carousel img {
+    width: 100%;
+    height: auto;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out; /* 添加淡入淡出动画 */
+  }
+
+  .carousel img.active {
+    display: block;
+    opacity: 1;
+  }
+
+  .carousel-caption {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-family: 'FloralD', cursive; /* 使用花体字 */
+    font-size: 2em; /* 调整字体大小 */
+    color: white; /* 设置字体颜色 */
+    background-color: rgba(0, 0, 0, 0.5); /* 设置背景颜色和透明度 */
+    padding: 10px 0; /* 添加内边距 */
+  }
+
+  .carousel-thumbnails {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .carousel-thumbnails img {
+    width: 20%;
+    height: auto;
+    margin: 0 5px;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.3s ease-in-out; /* 添加缩略图的淡入淡出动画 */
+  }
+
+  .carousel-thumbnails img.active-thumb {
+    opacity: 1;
+  }
+
+  .carousel-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-family: 'FloralD', cursive; /* 使用花体字 */
+    font-size: 1.5em; /* 调整字体大小 */
+    color: white; /* 设置字体颜色 */
+    background-color: rgba(0, 0, 0, 0.3); /* 设置背景颜色和透明度 */
+    padding: 10px 0; /* 添加内边距 */
+  }
+
+  .top-right-images {
+    position: absolute;
+    top: 10px; /* 调整为距离顶部10px */
+    right: 10px; /* 调整为距离右侧10px */
+    display: flex; /* 使用flex布局来横排图片 */
+  }
+
+  .top-right-images img {
+    width: 50px; /* 设置图片宽度 */
+    height: 50px; /* 设置图片高度 */
+    margin-left: 10px; /* 设置图片之间的间距 */
+    cursor: pointer; /* 鼠标悬停时显示指针 */
+  }
+
+  .top-right-images img:hover {
+    opacity: 0.7; /* 鼠标悬停时图片透明度变为0.7 */
+  }
+
+  .top-right-images button {
+    border: none; /* 移除按钮边框 */
+    background: none; /* 移除按钮背景 */
+    cursor: pointer; /* 鼠标悬停时显示指针 */
+  }
+
+  .top-right-images button:hover {
+    opacity: 0.7; /* 鼠标悬停时按钮透明度变为0.7 */
+  }
+
+</style>
+</head>
+<body>
+
+<div class="carousel">
+  <div class="carousel-caption">请选择地图</div>
+  <img src="image1.png" class="active" data-text="这是一个AI生成的古风女子。">
+  <img src="image2.png" data-text="这是输入“宋韵文化”AI生成的图片。">
+  <img src="image3.png" data-text="这是AI生成的“晚霞古城图”。">
+  <div class="carousel-text"></div>
+</div>
+
+<div class="carousel-thumbnails">
+  <img src="image1.png" class="active-thumb" onclick="showImage(this)">
+  <img src="image2.png" onclick="showImage(this)">
+  <img src="image3.png" onclick="showImage(this)">
+</div>
+
+<!-- 新增的右上角图片和按钮 -->
+<div class="top-right-images">
+    <img src="setting.png" alt="设置" onclick="alert('设置被点击了!')">
+    <img src="medal.png" alt="奖牌" onclick="alert('奖牌被点击了!')">
+    <img src="tips.png" alt="提示" onclick="alert('提示被点击了!')">
+  </div>
+
+<script>
+  function showImage(selectedThumb) {
+    const images = document.querySelectorAll('.carousel img');
+    images.forEach(img => img.classList.remove('active'));
+
+    const thumbnails = document.querySelectorAll('.carousel-thumbnails img');
+    thumbnails.forEach(thumb => thumb.classList.remove('active-thumb'));
+
+    const src = selectedThumb.getAttribute('src');
+    const mainImage = document.querySelector(`.carousel img[src="${src}"]`);
+    mainImage.classList.add('active');
+
+    selectedThumb.classList.add('active-thumb');
+
+    // 更新文本
+    const text = mainImage.getAttribute('data-text');
+    const carouselText = document.querySelector('.carousel-text');
+    carouselText.textContent = text;
+  }
+</script>
+
+</body>
+</html>
